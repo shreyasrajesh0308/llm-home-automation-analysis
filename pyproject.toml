@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "llm-home-automation-analysis"
+version = "0.1.0"
+description = "Evaluation of Home Automation Capabilities of LLM classes"
+authors = ["Shreyas Rajesh <shreyasrajesh38@g.ucla.edu>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
