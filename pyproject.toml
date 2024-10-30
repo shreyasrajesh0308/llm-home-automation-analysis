@@ -1,8 +1,8 @@
 [tool.poetry]
 name = "llm-home-automation-analysis"
 version = "0.1.0"
-description = "Evaluation of Home Automation Capabilities of LLM classes"
-authors = ["Shreyas Rajesh <shreyasrajesh38@g.ucla.edu>"]
+description = "Evaluation of Home Automation Capabilities of the different classes of Large Language Models"
+authors = ["Shreyas Rajesh <shreyasrajesh38@g.ucla.edu>", "Chenda Duan <chenda@ucla.edu>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
