@@ -95,5 +95,5 @@ Understanding Tradeoffs between model size, performance, query complexity and co
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Acknowledgments
-- Add your acknowledgments here
+<!-- ## Acknowledgments
+- Add your acknowledgments here -->
