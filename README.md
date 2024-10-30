@@ -4,7 +4,7 @@ A comprehensive analysis of Local Large Language Models (LLMs) for home automati
 
 ## Authors
 - Shreyas Rajesh (shreyasrajesh38@g.ucla.edu)
-- Chenda Duan
+- Chenda Duan (chenda@ucla.edu)
 
 ## Project Overview
 
