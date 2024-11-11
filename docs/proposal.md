@@ -7,7 +7,7 @@ title: Project Proposal
 
 ## 1. Motivation & Objective
 
-What are you trying to do and why? (plain English without jargon)
+To analyze and evaluate the performance of Large Language Models (LLMs) in home automation applications, focusing on the relationships between instruction complexity, model size, system resources, and execution performance.
 
 ## 2. State of the Art & Its Limitations
 

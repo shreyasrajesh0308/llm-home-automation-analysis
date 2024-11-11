@@ -4,14 +4,13 @@ title: Home
 ---
 
 # Abstract
+A comprehensive analysis of Local Large Language Models (LLMs) for home automation applications, focusing on performance tradeoffs across different model sizes and deployment strategies.
 
-[Provide a brief overview of the project objectives, approach, and results]
 
 # Team
 
-* [Name of team member #1]
-* [Name of team member #2]
-* [Name of team member #3]
+* Shreyas Rajesh
+* Chenda Duan
 
 # Required Submissions
 
