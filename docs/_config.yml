@@ -1,0 +1,19 @@
+# Site settings
+title: Project Documentation
+description: Documentation for your project
+theme: jekyll-theme-minimal
+
+# Build settings
+markdown: kramdown
+plugins:
+  - jekyll-relative-links
+
+# Enable relative links
+relative_links:
+  enabled: true
+  collections: true
+
+
+# # Base URL settings
+# baseurl: "/your-repo-name"  # Replace with your repository name
+# url: "" # Replace with your GitHub Pages URL when known
