@@ -1,4 +1,4 @@
-from llm_home_automation_analysis.src.device import Device, HumanStatusReporter
+from llm_home_automation_analysis.src.simulation.device import Device, HumanStatusReporter
 class Room:
     def __init__(self, name):
         self.name = name

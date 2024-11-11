@@ -1,6 +1,6 @@
-from llm_home_automation_analysis.src.house import House
-from llm_home_automation_analysis.src.room import Room
-from llm_home_automation_analysis.src.device import Light, AirConditioner
+from llm_home_automation_analysis.src.simulation.house import House
+from llm_home_automation_analysis.src.simulation.room import Room
+from llm_home_automation_analysis.src.simulation.device import Light, AirConditioner
 def main():
     # Create devices
     light1 = Light(name="Living Room Light")
