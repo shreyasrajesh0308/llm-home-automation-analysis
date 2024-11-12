@@ -26,3 +26,11 @@ class Room:
 
     def set_human_status(self, is_present):
         self.human_status_reporter.set_status(is_present)
+        
+    def get_status(self):
+        status = {
+            'room_name': self.name,
+            'devices': [device.get_status() for device in self.devices],
+            'human_status': self.human_status_reporter.get_status()
+        }
+        return status

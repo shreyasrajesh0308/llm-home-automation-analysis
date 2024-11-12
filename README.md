@@ -6,6 +6,20 @@ A comprehensive analysis of Local Large Language Models (LLMs) for home automati
 - Shreyas Rajesh (shreyasrajesh38@g.ucla.edu)
 - Chenda Duan (chenda@ucla.edu)
 
+## Quick Install
+We use poetry to manage the package
+To install, simply run following code
+```bash
+git clone https://github.com/shreyasrajesh0308/llm-home-automation-analysis.git
+cd llm-home-automation-analysis
+conda create -n llmhome python==3.9 # any version greater is okay
+conda activate llmhome
+pip install poetry
+poetry config virtualenvs.create false
+conda install --channel=numba llvmlite
+poetry install
+```
+
 ## Project Overview
 
 ### Primary Goal

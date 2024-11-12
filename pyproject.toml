@@ -2,13 +2,20 @@
 name = "llm-home-automation-analysis"
 version = "0.1.0"
 description = "Evaluation of Home Automation Capabilities of the different classes of Large Language Models"
-authors = ["Shreyas Rajesh <shreyasrajesh38@g.ucla.edu>", "Chenda Duan <chenda@ucla.edu>"]
+authors = [
+    "Shreyas Rajesh <shreyasrajesh38@g.ucla.edu>",
+    "Chenda Duan <chenda@ucla.edu>"
+]
 readme = "README.md"
 
-[tool.poetry.dependencies]
-python = "^3.10"
-openai-whisper = "20240930"p
+# Add the packages key here
+packages = [
+    { include = "llm_home_automation_analysis" }
+]
 
+[tool.poetry.dependencies]
+python = "^3.9"
+openai-whisper = "20240930"
 
 [build-system]
 requires = ["poetry-core"]
