@@ -16,6 +16,7 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.9"
 openai-whisper = "20240930"
+openai = "1.54.3"
 
 [build-system]
 requires = ["poetry-core"]
