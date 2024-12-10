@@ -1,10 +1,10 @@
-from llm_home_automation_analysis.src.simulation.device import Device, HumanStatusReporter
+from llm_home_automation_analysis.src.simulation.device import Device, PresenceSensor
 
 class Room:
     def __init__(self, name):
         self.name = name
         self.devices = {}
-        self.human_status_reporter = HumanStatusReporter()
+        self.human_status_reporter = PresenceSensor()
 
     def add_device(self, device: Device):
         self.devices[device.name] = device

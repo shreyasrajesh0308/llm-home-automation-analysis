@@ -1,0 +1,357 @@
+{
+    "composite_commands": [
+      {
+        "input": "Turn off the bedroom light and the bedroom AC",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom Light",
+              "action": "turn_off",
+              "parameters": {}
+            },
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom AC",
+              "action": "turn_off",
+              "parameters": {}
+            }
+          ]
+        }
+      },
+      {
+        "input": "Turn on living room light and set brightness to 80",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room Light",
+              "action": "turn_on",
+              "parameters": {}
+            },
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room Light",
+              "action": "set_brightness",
+              "parameters": {"brightness": 80}
+            }
+          ]
+        }
+      },
+      {
+        "input": "Set bedroom AC temperature to 23 and switch to cooling mode",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom AC",
+              "action": "set_temperature",
+              "parameters": {"temperature": 23}
+            },
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom AC",
+              "action": "set_mode",
+              "parameters": {"mode": "cool"}
+            }
+          ]
+        }
+      },
+      {
+        "input": "Turn on living room AC and set temperature to 25",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room AC",
+              "action": "turn_on",
+              "parameters": {}
+            },
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room AC",
+              "action": "set_temperature",
+              "parameters": {"temperature": 25}
+            }
+          ]
+        }
+      },
+      {
+        "input": "Set living room light color temp to 3000 and brightness to 60",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room Light",
+              "action": "set_color_temp",
+              "parameters": {"color_temp": 3000}
+            },
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room Light",
+              "action": "set_brightness",
+              "parameters": {"brightness": 60}
+            }
+          ]
+        }
+      },
+      {
+        "input": "Turn off living room light and turn on bedroom light",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room Light",
+              "action": "turn_off",
+              "parameters": {}
+            },
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom Light",
+              "action": "turn_on",
+              "parameters": {}
+            }
+          ]
+        }
+      },
+      {
+        "input": "Set bedroom AC to heat mode and temperature to 22",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom AC",
+              "action": "set_mode",
+              "parameters": {"mode": "heat"}
+            },
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom AC",
+              "action": "set_temperature",
+              "parameters": {"temperature": 22}
+            }
+          ]
+        }
+      },
+      {
+        "input": "Turn on both AC units and set to fan mode",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room AC",
+              "action": "turn_on",
+              "parameters": {}
+            },
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom AC",
+              "action": "turn_on",
+              "parameters": {}
+            },
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room AC",
+              "action": "set_mode",
+              "parameters": {"mode": "fan"}
+            },
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom AC",
+              "action": "set_mode",
+              "parameters": {"mode": "fan"}
+            }
+          ]
+        }
+      },
+      {
+        "input": "Set bedroom light brightness to 40 and AC temperature to 24",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom Light",
+              "action": "set_brightness",
+              "parameters": {"brightness": 40}
+            },
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom AC",
+              "action": "set_temperature",
+              "parameters": {"temperature": 24}
+            }
+          ]
+        }
+      },
+      {
+        "input": "Turn off both lights and set them to 0% brightness",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room Light",
+              "action": "turn_off",
+              "parameters": {}
+            },
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom Light",
+              "action": "turn_off",
+              "parameters": {}
+            },
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room Light",
+              "action": "set_brightness",
+              "parameters": {"brightness": 0}
+            },
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom Light",
+              "action": "set_brightness",
+              "parameters": {"brightness": 0}
+            }
+          ]
+        }
+      },
+      {
+        "input": "Set living room AC to cool mode and light to warm white",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room AC",
+              "action": "set_mode",
+              "parameters": {"mode": "cool"}
+            },
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room Light",
+              "action": "set_color_temp",
+              "parameters": {"color_temp": 2700}
+            }
+          ]
+        }
+      },
+      {
+        "input": "Turn on bedroom light and set color temperature to 4000K",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom Light",
+              "action": "turn_on",
+              "parameters": {}
+            },
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom Light",
+              "action": "set_color_temp",
+              "parameters": {"color_temp": 4000}
+            }
+          ]
+        }
+      },
+      {
+        "input": "Set both ACs to 25 degrees and heating mode",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room AC",
+              "action": "set_temperature",
+              "parameters": {"temperature": 25}
+            },
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom AC",
+              "action": "set_temperature",
+              "parameters": {"temperature": 25}
+            },
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room AC",
+              "action": "set_mode",
+              "parameters": {"mode": "heat"}
+            },
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom AC",
+              "action": "set_mode",
+              "parameters": {"mode": "heat"}
+            }
+          ]
+        }
+      },
+      {
+        "input": "Turn off bedroom AC and set living room AC to 26 degrees",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom AC",
+              "action": "turn_off",
+              "parameters": {}
+            },
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room AC",
+              "action": "set_temperature",
+              "parameters": {"temperature": 26}
+            }
+          ]
+        }
+      },
+      {
+        "input": "Set both lights to 70% brightness and cool white",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room Light",
+              "action": "set_brightness",
+              "parameters": {"brightness": 70}
+            },
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom Light",
+              "action": "set_brightness",
+              "parameters": {"brightness": 70}
+            },
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room Light",
+              "action": "set_color_temp",
+              "parameters": {"color_temp": 6500}
+            },
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom Light",
+              "action": "set_color_temp",
+              "parameters": {"color_temp": 6500}
+            }
+          ]
+        }
+      },
+      {
+        "input": "Turn on kitchen light and set bathroom AC temperature",
+        "output": null
+      },
+      {
+        "input": "Set bedroom light brightness to 150 and turn off AC",
+        "output": null
+      },
+      {
+        "input": "Turn all devices to automatic mode",
+        "output": null
+      },
+      {
+        "input": "Make rooms cozy and reduce energy consumption",
+        "output": null
+      },
+      {
+        "input": "Switch lights to party mode and AC to sleep mode",
+        "output": null
+      }
+    ]
+  }

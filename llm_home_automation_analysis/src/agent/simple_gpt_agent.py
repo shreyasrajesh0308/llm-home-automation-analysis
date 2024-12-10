@@ -3,6 +3,7 @@ import os
 from pydantic import BaseModel, Field
 import openai
 from typing import Optional
+from collections import defaultdict
 
 from llm_home_automation_analysis.src.simulation.house import House
 from llm_home_automation_analysis.src.simulation.room import Room
@@ -67,18 +68,22 @@ Instructions:
             {"role": "user", "content": task_prompt}
         ]
 
-        class CommandOutput(BaseModel):
-            target_room_name: str = Field(..., description="The name of the room where the device is located.")
-            device_name: str = Field(..., description="The name of the device to control.")
-            action: str = Field(..., description="The action to perform on the device.")
-            parameters: Optional[dict] = Field(default=None, description="Additional parameters for the action.")
+        class CommandsOutputs(BaseModel):
+            class CommandOutput(BaseModel):
+                target_room_name: str = Field(..., description="The name of the room where the device is located.")
+                device_name: str = Field(..., description="The name of the device to control.")
+                action: str = Field(..., description="The action to perform on the device.")
+                parameters: Optional[dict] = Field(default=None, description="Additional parameters for the action.")
+
+            commands: list[CommandOutput] = Field(..., description="The list of commands to execute.")
+            reasoning: str = Field(..., description="Provide a detailed reasoning for the commands that have to be run")
 
         client = openai.OpenAI()
         response = client.beta.chat.completions.parse(
             model="gpt-4o-mini",
             messages=messages,
             temperature=0,
-            response_format=CommandOutput,
+            response_format=CommandsOutputs,
         )
 
         result = response.choices[0].message.parsed  # Access the parsed command arguments
@@ -95,6 +100,8 @@ Instructions:
         except Exception as e:
             print(f"Error executing command: {e}")
             print(f"Assistant: I'm sorry, I couldn't execute your command due to an error.")
+
+        return result
 
     @staticmethod
     def load_house_state(filename):
@@ -135,7 +142,7 @@ def main():
     agent = GPTAgent(my_house, command_interface)
 
     # Load the natural language commands
-    nl_commands_file = os.path.join(asset_dir, 'nl_commands.json')
+    nl_commands_file = os.path.join(asset_dir, 'composite_commands.json')
     if not os.path.exists(nl_commands_file):
         print(f"Natural language commands file '{nl_commands_file}' not found.")
         return
@@ -143,37 +150,59 @@ def main():
     with open(nl_commands_file, 'r') as f:
         nl_commands = json.load(f)
 
+    nl_commands = nl_commands['composite_commands']
+    print(nl_commands)
+    outs_dict = defaultdict(list)
+
+    for idx, instruction in enumerate(nl_commands):
+        print(f"\nProcessing command {idx+1}/{len(nl_commands)}:")
+        print(f"Instruction: {instruction['input']}")
+        result = agent.process_command(instruction['input'])
+        inter_dict = {
+            "instruction": instruction["input"],
+            "ground_truth": instruction["output"],
+            "result": result.model_dump()
+        }
+        outs_dict[instruction['input']].append(inter_dict)
+        break
+
+    # Write the results to a file
+    with open(os.path.join(asset_dir, 'simple_gpt_results.json'), 'w') as f:
+        json.dump(outs_dict, f, indent=2)
+
+        
+
     # Resume capabilities
-    resume_file = os.path.join(asset_dir, 'agent_resume.json')
-    if os.path.exists(resume_file):
-        with open(resume_file, 'r') as f:
-            resume_data = json.load(f)
-            start_index = resume_data.get('last_processed_index', 0)
-    else:
-        start_index = 0
+    # resume_file = os.path.join(asset_dir, 'agent_resume.json')
+    # if os.path.exists(resume_file):
+    #     with open(resume_file, 'r') as f:
+    #         resume_data = json.load(f)
+    #         start_index = resume_data.get('last_processed_index', 0)
+    # else:
+    #     start_index = 0
 
     # Process each natural language command
-    for idx in range(start_index, len(nl_commands)):
-        # Extract the list of instructions
-        natural_language_data = nl_commands[idx]['natural_language']
-        instruction_list = natural_language_data[1]  # Assuming the structure is ["instructions", [list_of_instructions]]
+    # for idx in range(start_index, len(nl_commands)):
+    #     # Extract the list of instructions
+    #     natural_language_data = nl_commands[idx]['natural_language']
+    #     instruction_list = natural_language_data[1]  # Assuming the structure is ["instructions", [list_of_instructions]]
 
-        for nl_instruction in instruction_list:
-            print(f"\nProcessing command {idx+1}/{len(nl_commands)}:")
-            print(f"Instruction: {nl_instruction}")
+    #     for nl_instruction in instruction_list:
+    #         print(f"\nProcessing command {idx+1}/{len(nl_commands)}:")
+    #         print(f"Instruction: {nl_instruction}")
 
-            agent.process_command(nl_instruction)
+    #         agent.process_command(nl_instruction)
 
-            # Optionally, print the updated device status
-            command = nl_commands[idx]['command']
-            target_room = command['target_room_name']
-            device_name = command['device_name']
-            device_status = my_house.get_room_status(target_room)['devices'][device_name]
-            print(f"Updated Status of '{device_name}' in '{target_room}': {device_status}")
+    #         # Optionally, print the updated device status
+    #         command = nl_commands[idx]['command']
+    #         target_room = command['target_room_name']
+    #         device_name = command['device_name']
+    #         device_status = my_house.get_room_status(target_room)['devices'][device_name]
+    #         print(f"Updated Status of '{device_name}' in '{target_room}': {device_status}")
 
-            # Save resume data
-            with open(resume_file, 'w') as f:
-                json.dump({'last_processed_index': idx + 1}, f)
+    #         # Save resume data
+    #         with open(resume_file, 'w') as f:
+    #             json.dump({'last_processed_index': idx + 1}, f)
 
 if __name__ == "__main__":
     main()

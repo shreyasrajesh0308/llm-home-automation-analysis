@@ -1,0 +1,333 @@
+{
+    "complex_commands": [
+      {
+        "input": "If no one is in the bedroom, turn off all devices",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom Light",
+              "action": "turn_off",
+              "parameters": {}
+            },
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom AC",
+              "action": "turn_off",
+              "parameters": {}
+            }
+          ]
+        }
+      },
+      {
+        "input": "When temperature is above 25 degrees, turn on AC and set to cooling mode",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room AC",
+              "action": "turn_on",
+              "parameters": {}
+            },
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room AC",
+              "action": "set_mode",
+              "parameters": {"mode": "cool"}
+            }
+          ]
+        }
+      },
+      {
+        "input": "If someone enters the living room, turn on the lights at 70% brightness",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room Light",
+              "action": "turn_on",
+              "parameters": {}
+            },
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room Light",
+              "action": "set_brightness",
+              "parameters": {"brightness": 70}
+            }
+          ]
+        }
+      },
+      {
+        "input": "When room is empty for 30 minutes, set AC to 26 degrees and fan mode",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room AC",
+              "action": "set_temperature",
+              "parameters": {"temperature": 26}
+            },
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room AC",
+              "action": "set_mode",
+              "parameters": {"mode": "fan"}
+            }
+          ]
+        }
+      },
+      {
+        "input": "If bedroom is occupied, set light to warm white and 50% brightness",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom Light",
+              "action": "set_color_temp",
+              "parameters": {"color_temp": 2700}
+            },
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom Light",
+              "action": "set_brightness",
+              "parameters": {"brightness": 50}
+            }
+          ]
+        }
+      },
+      {
+        "input": "When living room is empty, dim lights to 10% and turn off AC",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room Light",
+              "action": "set_brightness",
+              "parameters": {"brightness": 10}
+            },
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room AC",
+              "action": "turn_off",
+              "parameters": {}
+            }
+          ]
+        }
+      },
+      {
+        "input": "If temperature drops below 20 degrees, turn on AC in heating mode",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room AC",
+              "action": "turn_on",
+              "parameters": {}
+            },
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room AC",
+              "action": "set_mode",
+              "parameters": {"mode": "heat"}
+            }
+          ]
+        }
+      },
+      {
+        "input": "When bedroom is occupied for more than 1 hour, set AC temperature to 24",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom AC",
+              "action": "set_temperature",
+              "parameters": {"temperature": 24}
+            }
+          ]
+        }
+      },
+      {
+        "input": "If no movement in living room, turn off lights and set AC to fan mode",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room Light",
+              "action": "turn_off",
+              "parameters": {}
+            },
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room AC",
+              "action": "set_mode",
+              "parameters": {"mode": "fan"}
+            }
+          ]
+        }
+      },
+      {
+        "input": "When both rooms are empty, turn off all devices",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room Light",
+              "action": "turn_off",
+              "parameters": {}
+            },
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room AC",
+              "action": "turn_off",
+              "parameters": {}
+            },
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom Light",
+              "action": "turn_off",
+              "parameters": {}
+            },
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom AC",
+              "action": "turn_off",
+              "parameters": {}
+            }
+          ]
+        }
+      },
+      {
+        "input": "If someone is in bedroom, turn on light and set AC to 23 degrees",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom Light",
+              "action": "turn_on",
+              "parameters": {}
+            },
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom AC",
+              "action": "set_temperature",
+              "parameters": {"temperature": 23}
+            }
+          ]
+        }
+      },
+      {
+        "input": "When temperature is above 28 degrees, turn on both ACs in cooling mode",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room AC",
+              "action": "turn_on",
+              "parameters": {}
+            },
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom AC",
+              "action": "turn_on",
+              "parameters": {}
+            },
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room AC",
+              "action": "set_mode",
+              "parameters": {"mode": "cool"}
+            },
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom AC",
+              "action": "set_mode",
+              "parameters": {"mode": "cool"}
+            }
+          ]
+        }
+      },
+      {
+        "input": "If living room is empty for 2 hours, turn everything off and set lights to 0",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room Light",
+              "action": "turn_off",
+              "parameters": {}
+            },
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room AC",
+              "action": "turn_off",
+              "parameters": {}
+            },
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room Light",
+              "action": "set_brightness",
+              "parameters": {"brightness": 0}
+            }
+          ]
+        }
+      },
+      {
+        "input": "When someone enters bedroom, set light to cool white and turn on AC",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom Light",
+              "action": "set_color_temp",
+              "parameters": {"color_temp": 6500}
+            },
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom AC",
+              "action": "turn_on",
+              "parameters": {}
+            }
+          ]
+        }
+      },
+      {
+        "input": "If temperature is below 18 degrees, set both ACs to heating mode",
+        "output": {
+          "commands": [
+            {
+              "target_room_name": "Living Room",
+              "device_name": "Living Room AC",
+              "action": "set_mode",
+              "parameters": {"mode": "heat"}
+            },
+            {
+              "target_room_name": "Bedroom",
+              "device_name": "Bedroom AC",
+              "action": "set_mode",
+              "parameters": {"mode": "heat"}
+            }
+          ]
+        }
+      },
+      {
+        "input": "When energy consumption is high, reduce all device power",
+        "output": null
+      },
+      {
+        "input": "If air quality is poor, enable air purification mode",
+        "output": null
+      },
+      {
+        "input": "When sun sets, adjust lighting for evening mode",
+        "output": null
+      },
+      {
+        "input": "If weather is rainy, adjust indoor settings",
+        "output": null
+      },
+      {
+        "input": "When guest mode is active, optimize all settings",
+        "output": null
+      }
+    ]
+  }

@@ -148,6 +148,11 @@ def main():
 
     # Save the initial house state
     house_state = my_house.get_house_status()
+
+    # Make dir if not exists
+    os.makedirs('asset', exist_ok=True)
+
+    # Save the initial house state
     with open('asset/house_state.json', 'w') as f:
         json.dump(house_state, f, indent=2)
         print("Initial house state saved to 'house_state.json'.")
