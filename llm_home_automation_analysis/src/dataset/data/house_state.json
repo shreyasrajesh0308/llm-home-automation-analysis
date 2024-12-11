@@ -8,8 +8,8 @@
           "type": "Light",
           "status": {
             "power": false,
-            "brightness": 100,
-            "color_temp": 2700
+            "brightness": null,
+            "color_temp": null
           }
         },
         "Living Room AC": {
@@ -17,8 +17,8 @@
           "type": "AirConditioner",
           "status": {
             "power": false,
-            "temperature": 24,
-            "mode": "cool"
+            "temperature": null,
+            "mode": null
           }
         }
       },
@@ -27,7 +27,7 @@
         "type": "PresenceSensor",
         "status": {
           "power": false,
-          "human_present": true,
+          "human_present": false,
           "last_detection_time": null,
           "duration_of_presence": 0
         }
@@ -41,8 +41,8 @@
           "type": "Light",
           "status": {
             "power": false,
-            "brightness": 100,
-            "color_temp": 2700
+            "brightness": null,
+            "color_temp": null
           }
         },
         "Bedroom AC": {
@@ -50,8 +50,8 @@
           "type": "AirConditioner",
           "status": {
             "power": false,
-            "temperature": 24,
-            "mode": "cool"
+            "temperature": null,
+            "mode": null
           }
         }
       },

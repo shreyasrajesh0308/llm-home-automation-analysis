@@ -1,26 +1,32 @@
 import json
 import os
+os.environ['HF_HOME'] = '/mnt/SSD1/chenda/cache/huggingface'
 from pydantic import BaseModel, Field
 import openai
 from typing import Optional
 from collections import defaultdict
+from textwrap import dedent
+import time
+
+import outlines
+from outlines.samplers import greedy
+import llama_cpp
+from transformers import AutoTokenizer
 
 from llm_home_automation_analysis.src.simulation.house import House
 from llm_home_automation_analysis.src.simulation.room import Room
 from llm_home_automation_analysis.src.simulation.device import Light, AirConditioner
 from llm_home_automation_analysis.src.simulation.user_command import UserCommand
+from llm_home_automation_analysis.src.prompts.prompts import build_prompt, GPTAgentPrompt
+from llm_home_automation_analysis.src.prompts.prompts import CommandsOutputsWithReasoning, CommandsOutputs
 
 
-class CommandArguments(BaseModel):
-    target_room_name: str = Field(..., description="The name of the room where the device is located.")
-    device_name: str = Field(..., description="The name of the device to control.")
-    action: str = Field(..., description="The action to perform on the device.")
-    parameters: dict = Field(default_factory=dict, description="Additional parameters required for the action.")
 
 class GPTAgent:
-    def __init__(self, house, command_interface):
+    def __init__(self, house, command_interface, model_name):
         self.house = house
         self.command_interface = command_interface
+        self.model_name = model_name
 
     def build_context(self):
         # Build context with house structure and available actions
@@ -44,66 +50,148 @@ class GPTAgent:
         return context
 
     def process_command(self, user_input):
-        system_prompt = "You are an AI assistant for home automation."
         context = self.build_context()
 
-        task_prompt = f"""
-{context}
-
-User Input:
-"{user_input}"
-
-Instructions:
-- Analyze the user input.
-- Determine the appropriate command to execute based on the available devices and actions.
-- Provide the result as a JSON object with the following fields:
-  - target_room_name (string)
-  - device_name (string)
-  - action (string)
-  - parameters (object, optional)
-"""
-
         messages = [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": task_prompt}
+            {"role": "system", "content": GPTAgentPrompt.system_prompt},
+            {"role": "user", "content": dedent(build_prompt(context=context, user_input=user_input))}
         ]
 
-        class CommandsOutputs(BaseModel):
-            class CommandOutput(BaseModel):
-                target_room_name: str = Field(..., description="The name of the room where the device is located.")
-                device_name: str = Field(..., description="The name of the device to control.")
-                action: str = Field(..., description="The action to perform on the device.")
-                parameters: Optional[dict] = Field(default=None, description="Additional parameters for the action.")
-
-            commands: list[CommandOutput] = Field(..., description="The list of commands to execute.")
-            reasoning: str = Field(..., description="Provide a detailed reasoning for the commands that have to be run")
 
         client = openai.OpenAI()
         response = client.beta.chat.completions.parse(
-            model="gpt-4o-mini",
+            model=self.model_name,
             messages=messages,
             temperature=0,
-            response_format=CommandsOutputs,
+            response_format=CommandsOutputsWithReasoning,
         )
 
         result = response.choices[0].message.parsed  # Access the parsed command arguments
 
-        return result
+        return result, context
 
-        # Now execute the command
+    @staticmethod
+    def load_house_state(filename):
+        """Load the house state from a JSON file and recreate the house."""
+        with open(filename, 'r') as f:
+            house_data = json.load(f)
+
+        # Recreate the house
+        my_house = House()
+        for room_data in house_data['rooms']:
+            room = Room(name=room_data['room_name'])
+            room.set_human_status(room_data['human_status']['status']['human_present'])
+            for device_name, device_data in room_data['devices'].items():
+                device_type = device_data['type']
+                if device_type == 'Light':
+                    device = Light(name=device_name)
+                elif device_type == 'AirConditioner':
+                    device = AirConditioner(name=device_name)
+                else:
+                    continue  # Skip unknown device types
+
+                device.status = device_data['status']
+                room.add_device(device)
+            my_house.add_room(room)
+
+        return my_house
+    
+
+class OpenSourceAgent:
+    def __init__(self, house: House, command_interface: UserCommand, model_path, model_name, tokenizer_name):
+        self.house = house
+        self.command_interface = command_interface
+        self.model, self.tokenizer = self.load_llamacpp_model_tokenizer(model_path, model_name, tokenizer_name)
+        self.model_name = model_name
+        # Using outlines to generate JSON directly into a CommandOutput object
+        self.generator = outlines.generate.json(self.model, CommandsOutputsWithReasoning, sampler=greedy())
+
+    def load_llamacpp_model_tokenizer(self, model_path, model_name, tokenizer_name):
+        """
+        Load the required GGUF model and tokenizer.
+        Modify paths as needed.
+        """
+        print(f"Loading {model_name} model...")
+        model = outlines.models.llamacpp(
+            model_path,
+            model_name,
+            tokenizer=llama_cpp.llama_tokenizer.LlamaHFTokenizer.from_pretrained(tokenizer_name),
+            n_gpu_layers=-1,
+            verbose=False
+        )
+        tokenizer = AutoTokenizer.from_pretrained(tokenizer_name)
+        return model, tokenizer
+
+    def build_context(self):
+        # Build context with house structure and available actions
+        house_structure = self.command_interface.get_house_structure()
+        context = "House Structure and Available Actions:\n"
+        for room_name, devices in house_structure.items():
+            context += f"- {room_name}:\n"
+            for device_name in devices:
+                device = self.house.rooms[room_name].devices[device_name]
+                actions = device.get_actions()
+                context += f"  - Device: {device_name}\n"
+                for action_name, action_info in actions.items():
+                    context += f"    - Action: {action_name}\n"
+                    context += f"      Description: {action_info.description}\n"
+                    if action_info.parameters:
+                        context += f"      Parameters:\n"
+                        for param_name, param_info in action_info.parameters.items():
+                            context += f"        - {param_name} ({param_info.type})\n"
+                            context += f"          Description: {param_info.description}\n"
+                            context += f"          Range: {param_info.range}\n"
+        return context
+
+    def create_prompt(self, context: str, user_input: str) -> str:
+
+        messages = [
+            {
+                "role": "system",
+                "content": GPTAgentPrompt.system_prompt
+            },
+            {
+                "role": "user",
+                "content": dedent(build_prompt(context=context, user_input=user_input))
+            },
+            {
+                "role": "assistant",
+                "content": ""
+            }
+        ]
+
+        # Convert these messages into a text prompt using the tokenizer's template method
+        prompt = self.tokenizer.apply_chat_template(messages, tokenize=False)
+        return prompt
+
+    def process_command(self, user_input: str):
+
+        context = self.build_context()
+        prompt = self.create_prompt(context, user_input)
+
+        # Generate structured output that directly returns a CommandOutput object
         try:
-            self.command_interface.execute(
-                target_room_name=result.target_room_name,
-                device_name=result.device_name,
-                action=result.action,
-                parameters=result.parameters or {}  # Use an empty dict if parameters is None
-            )
-            print(f"Assistant: Executed action '{result.action}' on device '{result.device_name}' in room '{result.target_room_name}'.")
+            result = self.generator(prompt)
         except Exception as e:
-            print(f"Error executing command: {e}")
-            print(f"Assistant: I'm sorry, I couldn't execute your command due to an error.")
+            print(f"Error generating structured response: {e}")
+            print("Assistant: I couldn't produce a valid command.")
+            return None, context
 
-        return result
+
+        return result, context
+        # Execute the command
+        # try:
+        #     for cmd in result.commands:
+        #         self.command_interface.execute(
+        #             target_room_name=cmd.target_room_name,
+        #             device_name=cmd.device_name,
+        #             action=cmd.action,
+        #             parameters=cmd.parameters or {}
+        #         )
+        #         print(f"Assistant: Executed action '{cmd.action}' on device '{cmd.device_name}' in room '{cmd.target_room_name}'.")
+        # except Exception as e:
+        #     print(f"Error executing command: {e}")
+        #     print("Assistant: I'm sorry, I couldn't execute your command due to an error.")
 
     @staticmethod
     def load_house_state(filename):
@@ -138,72 +226,103 @@ def main():
     if not os.path.exists(house_state_file):
         print(f"House state file '{house_state_file}' not found.")
         return
+    
+    # model_names = ["gpt-4o-mini", "Qwen2.5-32B-Instruct", "llama-3.2-1B-Instruct", "Meta-Llama-3.1-8B-Instruct"]
+    model_names = ["gpt-4o-mini"]
 
-    my_house = GPTAgent.load_house_state(house_state_file)
-    command_interface = UserCommand(my_house)
-    agent = GPTAgent(my_house, command_interface)
+    command_files = ["simple_commands.json", "complex_commands.json", "composite_commands.json"]
+    command_fields = ["simple_commands", "complex_commands", "composite_commands"]
 
-    # Load the natural language commands
-    nl_commands_file = os.path.join(asset_dir, 'complex_commands.json')
-    if not os.path.exists(nl_commands_file):
-        print(f"Natural language commands file '{nl_commands_file}' not found.")
-        return
 
-    with open(nl_commands_file, 'r') as f:
-        nl_commands = json.load(f)
 
-    nl_commands = nl_commands['complex_commands']
-    print(nl_commands)
-    outs_dict = defaultdict(list)
+    for model_name in model_names:
 
-    for idx, instruction in enumerate(nl_commands):
-        print(f"\nProcessing command {idx+1}/{len(nl_commands)}:")
-        print(f"Instruction: {instruction['input']}")
-        result = agent.process_command(instruction['input'])
-        inter_dict = {
-            "instruction": instruction["input"],
-            "ground_truth": instruction["output"],
-            "result": result.model_dump()
-        }
-        outs_dict[instruction['input']].append(inter_dict)
+        print(f"Processing {model_name}...")
 
-    # Write the results to a file
-    with open(os.path.join(asset_dir, 'complex_gpt_results.json'), 'w') as f:
-        json.dump(outs_dict, f, indent=2)
+        if model_name == "gpt-4o-mini":
+            my_house = GPTAgent.load_house_state(house_state_file)
+            command_interface = UserCommand(my_house)
+            agent = GPTAgent(my_house, command_interface, model_name)
+            save_paths = ["simple_gpt_results.json", "complex_gpt_results.json", "composite_gpt_results.json"]
 
-        
+        elif model_name == "llama-3.2-1B-Instruct":
+            model_path = "bartowski/Llama-3.2-1B-Instruct-GGUF"
+            model_name = "Llama-3.2-1B-Instruct-f16.gguf"
+            tokenizer_name = "meta-llama/Llama-3.2-1B-Instruct"
+            my_house = OpenSourceAgent.load_house_state(house_state_file)
+            command_interface = UserCommand(my_house)
+            agent = OpenSourceAgent(my_house, command_interface, model_path, model_name, tokenizer_name)
+            save_paths = ["simple_llama1B_results.json", "complex_llama1B_results.json", "composite_llama1B_results.json"]
 
-    # Resume capabilities
-    # resume_file = os.path.join(asset_dir, 'agent_resume.json')
-    # if os.path.exists(resume_file):
-    #     with open(resume_file, 'r') as f:
-    #         resume_data = json.load(f)
-    #         start_index = resume_data.get('last_processed_index', 0)
-    # else:
-    #     start_index = 0
+        elif model_name == "Qwen2.5-32B-Instruct":
+            model_path = "bartowski/Qwen2.5-32B-Instruct-GGUF"
+            model_name = "Qwen2.5-32B-Instruct-Q5_K_S.gguf"
+            tokenizer_name = "Qwen/Qwen2.5-32B-Instruct"
+            my_house = OpenSourceAgent.load_house_state(house_state_file)
+            command_interface = UserCommand(my_house)
+            agent = OpenSourceAgent(my_house, command_interface, model_path, model_name, tokenizer_name)
+            save_paths = ["simple_qwen32B_results.json", "complex_qwen32B_results.json", "composite_qwen32B_results.json"]
 
-    # Process each natural language command
-    # for idx in range(start_index, len(nl_commands)):
-    #     # Extract the list of instructions
-    #     natural_language_data = nl_commands[idx]['natural_language']
-    #     instruction_list = natural_language_data[1]  # Assuming the structure is ["instructions", [list_of_instructions]]
+        elif model_name == "Meta-Llama-3.1-8B-Instruct":
+            model_path = "bartowski/Meta-Llama-3.1-8B-Instruct-GGUF"
+            model_name = "Meta-Llama-3.1-8B-Instruct-f32.gguf"
+            tokenizer_name = "meta-llama/Llama-3.1-8B-Instruct"
+            my_house = OpenSourceAgent.load_house_state(house_state_file)
+            command_interface = UserCommand(my_house)
+            agent = OpenSourceAgent(my_house, command_interface, model_path, model_name, tokenizer_name)
+            save_paths = ["simple_llama31_results.json", "complex_llama31_results.json", "composite_llama31_results.json"]
 
-    #     for nl_instruction in instruction_list:
-    #         print(f"\nProcessing command {idx+1}/{len(nl_commands)}:")
-    #         print(f"Instruction: {nl_instruction}")
 
-    #         agent.process_command(nl_instruction)
 
-    #         # Optionally, print the updated device status
-    #         command = nl_commands[idx]['command']
-    #         target_room = command['target_room_name']
-    #         device_name = command['device_name']
-    #         device_status = my_house.get_room_status(target_room)['devices'][device_name]
-    #         print(f"Updated Status of '{device_name}' in '{target_room}': {device_status}")
+        times = []
+        avg_times = []
 
-    #         # Save resume data
-    #         with open(resume_file, 'w') as f:
-    #             json.dump({'last_processed_index': idx + 1}, f)
+        for command_file, command_field, save_path in zip(command_files, command_fields, save_paths):
+            # Load the natural language commands
+            nl_commands_file = os.path.join(asset_dir, command_file)
+            if not os.path.exists(nl_commands_file):
+                print(f"Natural language commands file '{nl_commands_file}' not found.")
+                return
+
+            with open(nl_commands_file, 'r') as f:
+                nl_commands = json.load(f)
+
+            nl_commands = nl_commands[command_field]
+
+            results = []  # Changed from outs_dict
+
+            # Add latency analysis 
+            start_time_global = time.time()
+
+            for idx, instruction in enumerate(nl_commands):
+
+
+                start_time = time.time()
+                print(f"\nProcessing command {idx+1}/{len(nl_commands)}:")
+                print(f"Instruction: {instruction['input']}")
+                result, context = agent.process_command(instruction['input'])
+                results.append({
+                    "instruction": instruction["input"],
+                    "ground_truth": instruction["output"],
+                    "result": result.model_dump(),
+                    "context": context
+                })
+
+                end_time = time.time()
+                print(f"Time taken for {idx+1} command: {end_time - start_time} seconds")
+
+            end_time_global = time.time()
+            print(f"Total time taken: {end_time_global - start_time_global} seconds")
+            times.append(end_time_global - start_time_global)
+            print(f"Average time per command: {(end_time_global - start_time_global) / len(nl_commands)} seconds")
+            avg_times.append((end_time_global - start_time_global) / len(nl_commands))
+            # Write the results to a file
+            with open(os.path.join(asset_dir, save_path), 'w') as f:
+                json.dump(results, f, indent=2)
+
+        print(f"Average time taken for {model_name}: {sum(times) / len(times)} seconds")
+        print(f"Average time per command for {model_name}: {sum(avg_times) / len(avg_times)} seconds")
+
 
 if __name__ == "__main__":
     main()

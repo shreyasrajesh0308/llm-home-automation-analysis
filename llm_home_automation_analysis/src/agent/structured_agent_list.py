@@ -15,7 +15,6 @@ from llm_home_automation_analysis.src.simulation.house import House
 from llm_home_automation_analysis.src.simulation.room import Room
 from llm_home_automation_analysis.src.simulation.device import Light, AirConditioner
 from llm_home_automation_analysis.src.simulation.user_command import UserCommand
-from huggingface_hub import login
 
 # login(token="") # login to huggingface
 # set huggingface cache dir
@@ -233,6 +232,8 @@ if __name__ == "__main__":
     # model_path = "bartowski/Llama-3.2-1B-Instruct-GGUF"
     # model_name = "Llama-3.2-1B-Instruct-f16.gguf"
     # tokenizer_name = "meta-llama/Llama-3.2-1B-Instruct"
+
+
 
     house_state_file = 'asset/house_state.json'
     nl_commands_file = 'llm_home_automation_analysis/src/dataset/data/composite_commands.json'
