@@ -21,16 +21,22 @@
       "result": {
         "commands": [
           {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room Light",
+            "action": "turn_on",
+            "parameters": null
+          },
+          {
             "target_room_name": "Bedroom",
             "device_name": "Bedroom Light",
-            "action": "turn_off",
-            "parameters": {}
+            "action": "turn_on",
+            "parameters": null
           },
           {
             "target_room_name": "Bedroom",
             "device_name": "Bedroom AC",
-            "action": "turn_off",
-            "parameters": {}
+            "action": "turn_on",
+            "parameters": null
           }
         ]
       }
@@ -63,14 +69,24 @@
             "target_room_name": "Living Room",
             "device_name": "Living Room Light",
             "action": "turn_on",
-            "parameters": {}
-          },
-          {
-            "target_room_name": "Living Room",
-            "device_name": "Living Room Light",
-            "action": "set_brightness",
             "parameters": {
               "brightness": 80
+            }
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom Light",
+            "action": "turn_on",
+            "parameters": {
+              "brightness": 80
+            }
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
+            "action": "set_temperature",
+            "parameters": {
+              "temperature": 20
             }
           }
         ]
@@ -103,11 +119,35 @@
       "result": {
         "commands": [
           {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room Light",
+            "action": "set_brightness",
+            "parameters": {
+              "brightness": 50
+            }
+          },
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room Light",
+            "action": "set_color_temp",
+            "parameters": {
+              "color_temp": 3000
+            }
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom Light",
+            "action": "set_brightness",
+            "parameters": {
+              "brightness": 50
+            }
+          },
+          {
             "target_room_name": "Bedroom",
             "device_name": "Bedroom AC",
             "action": "set_temperature",
             "parameters": {
-              "temperature": 23
+              "temperature": 20
             }
           },
           {
@@ -147,16 +187,26 @@
         "commands": [
           {
             "target_room_name": "Living Room",
-            "device_name": "Living Room AC",
+            "device_name": "AC",
             "action": "turn_on",
-            "parameters": {}
-          },
-          {
-            "target_room_name": "Living Room",
-            "device_name": "Living Room AC",
-            "action": "set_temperature",
             "parameters": {
               "temperature": 25
+            }
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Light",
+            "action": "turn_on",
+            "parameters": {
+              "brightness": 50
+            }
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "AC",
+            "action": "set_temperature",
+            "parameters": {
+              "temperature": 22
             }
           }
         ]
@@ -203,6 +253,14 @@
             "parameters": {
               "brightness": 60
             }
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom Light",
+            "action": "set_brightness",
+            "parameters": {
+              "brightness": 50
+            }
           }
         ]
       }
@@ -232,14 +290,20 @@
           {
             "target_room_name": "Living Room",
             "device_name": "Living Room Light",
-            "action": "turn_off",
-            "parameters": {}
+            "action": "turn_on",
+            "parameters": null
           },
           {
             "target_room_name": "Bedroom",
             "device_name": "Bedroom Light",
             "action": "turn_on",
-            "parameters": {}
+            "parameters": null
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
+            "action": "turn_on",
+            "parameters": null
           }
         ]
       }
@@ -271,11 +335,19 @@
       "result": {
         "commands": [
           {
-            "target_room_name": "Bedroom",
-            "device_name": "Bedroom AC",
-            "action": "set_mode",
+            "target_room_name": "Living Room",
+            "device_name": "Living Room Light",
+            "action": "set_status",
             "parameters": {
-              "mode": "heat"
+              "brightness": 50
+            }
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom Light",
+            "action": "set_brightness",
+            "parameters": {
+              "brightness": 75
             }
           },
           {
@@ -283,7 +355,7 @@
             "device_name": "Bedroom AC",
             "action": "set_temperature",
             "parameters": {
-              "temperature": 22
+              "temperature": 25
             }
           }
         ]
@@ -329,23 +401,21 @@
         "commands": [
           {
             "target_room_name": "Living Room",
-            "device_name": "Living Room AC",
+            "device_name": "Living Room Light",
             "action": "turn_on",
-            "parameters": {}
+            "parameters": null
           },
           {
-            "target_room_name": "Living Room",
-            "device_name": "Living Room AC",
-            "action": "set_mode",
-            "parameters": {
-              "mode": "fan"
-            }
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom Light",
+            "action": "turn_on",
+            "parameters": null
           },
           {
             "target_room_name": "Bedroom",
             "device_name": "Bedroom AC",
             "action": "turn_on",
-            "parameters": {}
+            "parameters": null
           },
           {
             "target_room_name": "Bedroom",
@@ -384,6 +454,14 @@
       },
       "result": {
         "commands": [
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room Light",
+            "action": "set_brightness",
+            "parameters": {
+              "brightness": 40
+            }
+          },
           {
             "target_room_name": "Bedroom",
             "device_name": "Bedroom Light",
@@ -444,8 +522,10 @@
           {
             "target_room_name": "Living Room",
             "device_name": "Living Room Light",
-            "action": "turn_off",
-            "parameters": {}
+            "action": "turn_on",
+            "parameters": {
+              "brightness": 0
+            }
           },
           {
             "target_room_name": "Living Room",
@@ -456,18 +536,10 @@
             }
           },
           {
-            "target_room_name": "Bedroom",
-            "device_name": "Bedroom Light",
-            "action": "turn_off",
+            "target_room_name": "Living Room",
+            "device_name": "Living Room Light",
+            "action": "set_status",
             "parameters": {}
-          },
-          {
-            "target_room_name": "Bedroom",
-            "device_name": "Bedroom Light",
-            "action": "set_brightness",
-            "parameters": {
-              "brightness": 0
-            }
           }
         ]
       }
@@ -500,18 +572,10 @@
         "commands": [
           {
             "target_room_name": "Living Room",
-            "device_name": "Living Room AC",
+            "device_name": "AC",
             "action": "set_mode",
             "parameters": {
               "mode": "cool"
-            }
-          },
-          {
-            "target_room_name": "Living Room",
-            "device_name": "Living Room Light",
-            "action": "set_color_temp",
-            "parameters": {
-              "color_temp": 2700
             }
           }
         ]
@@ -542,10 +606,12 @@
       "result": {
         "commands": [
           {
-            "target_room_name": "Bedroom",
-            "device_name": "Bedroom Light",
+            "target_room_name": "Living Room",
+            "device_name": "Living Room Light",
             "action": "turn_on",
-            "parameters": {}
+            "parameters": {
+              "brightness": 50
+            }
           },
           {
             "target_room_name": "Bedroom",
@@ -553,6 +619,14 @@
             "action": "set_color_temp",
             "parameters": {
               "color_temp": 4000
+            }
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
+            "action": "set_temperature",
+            "parameters": {
+              "temperature": 22
             }
           }
         ]
@@ -602,18 +676,18 @@
         "commands": [
           {
             "target_room_name": "Living Room",
-            "device_name": "Living Room AC",
-            "action": "set_temperature",
+            "device_name": "Living Room Light",
+            "action": "set_brightness",
             "parameters": {
-              "temperature": 25
+              "brightness": 25
             }
           },
           {
-            "target_room_name": "Living Room",
-            "device_name": "Living Room AC",
-            "action": "set_mode",
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom Light",
+            "action": "set_brightness",
             "parameters": {
-              "mode": "heat"
+              "brightness": 25
             }
           },
           {
@@ -622,14 +696,6 @@
             "action": "set_temperature",
             "parameters": {
               "temperature": 25
-            }
-          },
-          {
-            "target_room_name": "Bedroom",
-            "device_name": "Bedroom AC",
-            "action": "set_mode",
-            "parameters": {
-              "mode": "heat"
             }
           }
         ]
@@ -660,17 +726,27 @@
       "result": {
         "commands": [
           {
-            "target_room_name": "Bedroom",
-            "device_name": "Bedroom AC",
-            "action": "turn_off",
-            "parameters": null
+            "target_room_name": "Living Room",
+            "device_name": "Living Room Light",
+            "action": "turn_on",
+            "parameters": {
+              "brightness": 50
+            }
           },
           {
-            "target_room_name": "Living Room",
-            "device_name": "Living Room AC",
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom Light",
+            "action": "turn_on",
+            "parameters": {
+              "brightness": 75
+            }
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
             "action": "set_temperature",
             "parameters": {
-              "temperature": 26
+              "temperature": 22
             }
           }
         ]
@@ -731,7 +807,7 @@
             "device_name": "Living Room Light",
             "action": "set_color_temp",
             "parameters": {
-              "color_temp": 6500
+              "color_temp": 3000
             }
           },
           {
@@ -747,7 +823,15 @@
             "device_name": "Bedroom Light",
             "action": "set_color_temp",
             "parameters": {
-              "color_temp": 6500
+              "color_temp": 3000
+            }
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
+            "action": "set_temperature",
+            "parameters": {
+              "temperature": 20
             }
           }
         ]
@@ -759,7 +843,34 @@
       "instruction": "Turn on kitchen light and set bathroom AC temperature",
       "ground_truth": null,
       "result": {
-        "commands": []
+        "commands": [
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room Light",
+            "action": "turn_on",
+            "parameters": null
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom Light",
+            "action": "turn_on",
+            "parameters": null
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
+            "action": "set_temperature",
+            "parameters": {
+              "temperature": 20
+            }
+          },
+          {
+            "target_room_name": "Kitchen",
+            "device_name": "Kitchen Light",
+            "action": "turn_on",
+            "parameters": null
+          }
+        ]
       }
     }
   ],
@@ -770,18 +881,28 @@
       "result": {
         "commands": [
           {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room Light",
+            "action": "turn_on",
+            "parameters": {
+              "brightness": 150
+            }
+          },
+          {
             "target_room_name": "Bedroom",
             "device_name": "Bedroom Light",
-            "action": "set_brightness",
+            "action": "turn_on",
             "parameters": {
-              "brightness": 100
+              "brightness": 150
             }
           },
           {
             "target_room_name": "Bedroom",
             "device_name": "Bedroom AC",
-            "action": "turn_off",
-            "parameters": null
+            "action": "set_temperature",
+            "parameters": {
+              "temperature": 20
+            }
           }
         ]
       }
@@ -792,7 +913,34 @@
       "instruction": "Turn all devices to automatic mode",
       "ground_truth": null,
       "result": {
-        "commands": []
+        "commands": [
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room Light",
+            "action": "turn_on",
+            "parameters": null
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom Light",
+            "action": "turn_on",
+            "parameters": null
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
+            "action": "turn_on",
+            "parameters": null
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
+            "action": "set_mode",
+            "parameters": {
+              "mode": "cool"
+            }
+          }
+        ]
       }
     }
   ],
@@ -805,49 +953,27 @@
           {
             "target_room_name": "Living Room",
             "device_name": "Living Room Light",
-            "action": "set_brightness",
-            "parameters": {
-              "brightness": 30
-            }
-          },
-          {
-            "target_room_name": "Living Room",
-            "device_name": "Living Room AC",
-            "action": "set_temperature",
-            "parameters": {
-              "temperature": 22
-            }
-          },
-          {
-            "target_room_name": "Living Room",
-            "device_name": "Living Room AC",
-            "action": "set_mode",
-            "parameters": {
-              "mode": "heat"
-            }
+            "action": "turn_on",
+            "parameters": null
           },
           {
             "target_room_name": "Bedroom",
             "device_name": "Bedroom Light",
-            "action": "set_brightness",
-            "parameters": {
-              "brightness": 30
-            }
+            "action": "turn_on",
+            "parameters": null
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
+            "action": "turn_on",
+            "parameters": null
           },
           {
             "target_room_name": "Bedroom",
             "device_name": "Bedroom AC",
             "action": "set_temperature",
             "parameters": {
-              "temperature": 22
-            }
-          },
-          {
-            "target_room_name": "Bedroom",
-            "device_name": "Bedroom AC",
-            "action": "set_mode",
-            "parameters": {
-              "mode": "heat"
+              "temperature": 20
             }
           }
         ]
@@ -863,33 +989,25 @@
           {
             "target_room_name": "Living Room",
             "device_name": "Living Room Light",
-            "action": "set_color_temp",
+            "action": "turn_on",
             "parameters": {
-              "color_temp": 6500
-            }
-          },
-          {
-            "target_room_name": "Living Room",
-            "device_name": "Living Room AC",
-            "action": "set_mode",
-            "parameters": {
-              "mode": "fan"
+              "brightness": 50
             }
           },
           {
             "target_room_name": "Bedroom",
             "device_name": "Bedroom Light",
-            "action": "set_color_temp",
+            "action": "turn_on",
             "parameters": {
-              "color_temp": 6500
+              "brightness": 50
             }
           },
           {
             "target_room_name": "Bedroom",
             "device_name": "Bedroom AC",
-            "action": "set_mode",
+            "action": "turn_on",
             "parameters": {
-              "mode": "fan"
+              "temperature": 22
             }
           }
         ]

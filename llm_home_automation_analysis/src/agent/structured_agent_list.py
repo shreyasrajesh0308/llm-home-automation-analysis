@@ -2,7 +2,7 @@ import json
 import os
 os.environ['HF_HOME'] = '/mnt/SSD1/chenda/cache/huggingface'
 from pydantic import BaseModel, Field
-from typing import Optional, Dict
+from typing import Optional, Dict, List
 from collections import defaultdict
 import outlines
 from outlines.samplers import greedy
@@ -17,7 +17,7 @@ from llm_home_automation_analysis.src.simulation.device import Light, AirConditi
 from llm_home_automation_analysis.src.simulation.user_command import UserCommand
 from huggingface_hub import login
 
-login(token="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")
+# login(token="") # login to huggingface
 # set huggingface cache dir
 
 
@@ -31,6 +31,10 @@ class CommandOutput(BaseModel):
     action: str = Field(..., description="The action to perform on the device.")
     parameters: Optional[Dict] = Field(default=None, description="Additional parameters for the action.")
 
+# New class for composite commands
+class CompositeCommandOutput(BaseModel):
+    commands: List[CommandOutput] = Field(..., description="A list of commands to be executed.")
+
 
 class Agent:
     def __init__(self, house: House, command_interface: UserCommand, model_path, model_name, tokenizer_name):
@@ -38,14 +42,14 @@ class Agent:
         self.command_interface = command_interface
         self.model, self.tokenizer = self.load_llamacpp_model_tokenizer(model_path, model_name, tokenizer_name)
         # Using outlines to generate JSON directly into a CommandOutput object
-        self.generator = outlines.generate.json(self.model, CommandOutput, sampler=greedy())
+        self.generator = outlines.generate.json(self.model, CompositeCommandOutput, sampler=greedy())
 
     def load_llamacpp_model_tokenizer(self, model_path, model_name, tokenizer_name):
         """
         Load the QWEN model from llama_cpp and the tokenizer from Qwen/Qwen2.5-32B-Instruct.
         Modify paths as needed.
         """
-        print("Loading QWEN model...")
+        print(f"Loading {model_name} model...")
         model = outlines.models.llamacpp(
             model_path,
             model_name,
@@ -98,7 +102,8 @@ User Input:
 Instructions:
 - Analyze the user input.
 - Determine the appropriate command to execute based on the available devices and actions.
-- Provide the result as a JSON object with the following fields:
+- Return a list of commands, if multiple commands are needed, include them all.
+- Provide the result as a list of JSON object with the following fields:
   - target_room_name (string)
   - device_name (string)
   - action (string)
@@ -128,13 +133,14 @@ Instructions:
 
         # Execute the command
         try:
-            self.command_interface.execute(
-                target_room_name=result.target_room_name,
-                device_name=result.device_name,
-                action=result.action,
-                parameters=result.parameters or {}
-            )
-            print(f"Assistant: Executed action '{result.action}' on device '{result.device_name}' in room '{result.target_room_name}'.")
+            for cmd in result.commands:
+                self.command_interface.execute(
+                    target_room_name=cmd.target_room_name,
+                    device_name=cmd.device_name,
+                    action=cmd.action,
+                    parameters=cmd.parameters or {}
+                )
+                print(f"Assistant: Executed action '{cmd.action}' on device '{cmd.device_name}' in room '{cmd.target_room_name}'.")
         except Exception as e:
             print(f"Error executing command: {e}")
             print("Assistant: I'm sorry, I couldn't execute your command due to an error.")
@@ -226,7 +232,7 @@ if __name__ == "__main__":
     
     # model_path = "bartowski/Llama-3.2-1B-Instruct-GGUF"
     # model_name = "Llama-3.2-1B-Instruct-f16.gguf"
-    # tokenizer_name = "meta-llama/Llama-3.2-1B"
+    # tokenizer_name = "meta-llama/Llama-3.2-1B-Instruct"
 
     house_state_file = 'asset/house_state.json'
     nl_commands_file = 'llm_home_automation_analysis/src/dataset/data/composite_commands.json'
