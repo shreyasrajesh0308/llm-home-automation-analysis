@@ -1,0 +1,70 @@
+{
+  "rooms": [
+    {
+      "room_name": "Living Room",
+      "devices": {
+        "Living Room Light": {
+          "name": "Living Room Light",
+          "type": "Light",
+          "status": {
+            "power": false,
+            "brightness": 100,
+            "color_temp": 2700
+          }
+        },
+        "Living Room AC": {
+          "name": "Living Room AC",
+          "type": "AirConditioner",
+          "status": {
+            "power": false,
+            "temperature": 24,
+            "mode": "cool"
+          }
+        }
+      },
+      "human_status": {
+        "name": "Default Presence Sensor",
+        "type": "PresenceSensor",
+        "status": {
+          "power": false,
+          "human_present": true,
+          "last_detection_time": null,
+          "duration_of_presence": 0
+        }
+      }
+    },
+    {
+      "room_name": "Bedroom",
+      "devices": {
+        "Bedroom Light": {
+          "name": "Bedroom Light",
+          "type": "Light",
+          "status": {
+            "power": false,
+            "brightness": 100,
+            "color_temp": 2700
+          }
+        },
+        "Bedroom AC": {
+          "name": "Bedroom AC",
+          "type": "AirConditioner",
+          "status": {
+            "power": false,
+            "temperature": 24,
+            "mode": "cool"
+          }
+        }
+      },
+      "human_status": {
+        "name": "Default Presence Sensor",
+        "type": "PresenceSensor",
+        "status": {
+          "power": false,
+          "human_present": false,
+          "last_detection_time": null,
+          "duration_of_presence": 0
+        }
+      }
+    }
+  ]
+}

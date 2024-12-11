@@ -88,6 +88,8 @@ Instructions:
 
         result = response.choices[0].message.parsed  # Access the parsed command arguments
 
+        return result
+
         # Now execute the command
         try:
             self.command_interface.execute(
@@ -131,7 +133,7 @@ Instructions:
 
 def main():
     # Load the house state
-    asset_dir = '/home/shreyas/NLP/llm-home-automation-analysis/llm_home_automation_analysis/src/dataset/asset'
+    asset_dir = '/home/shreyas/NLP/llm-home-automation-analysis/llm_home_automation_analysis/src/dataset/data'
     house_state_file = os.path.join(asset_dir, 'house_state.json')
     if not os.path.exists(house_state_file):
         print(f"House state file '{house_state_file}' not found.")
@@ -142,7 +144,7 @@ def main():
     agent = GPTAgent(my_house, command_interface)
 
     # Load the natural language commands
-    nl_commands_file = os.path.join(asset_dir, 'composite_commands.json')
+    nl_commands_file = os.path.join(asset_dir, 'complex_commands.json')
     if not os.path.exists(nl_commands_file):
         print(f"Natural language commands file '{nl_commands_file}' not found.")
         return
@@ -150,7 +152,7 @@ def main():
     with open(nl_commands_file, 'r') as f:
         nl_commands = json.load(f)
 
-    nl_commands = nl_commands['composite_commands']
+    nl_commands = nl_commands['complex_commands']
     print(nl_commands)
     outs_dict = defaultdict(list)
 
@@ -164,10 +166,9 @@ def main():
             "result": result.model_dump()
         }
         outs_dict[instruction['input']].append(inter_dict)
-        break
 
     # Write the results to a file
-    with open(os.path.join(asset_dir, 'simple_gpt_results.json'), 'w') as f:
+    with open(os.path.join(asset_dir, 'complex_gpt_results.json'), 'w') as f:
         json.dump(outs_dict, f, indent=2)
 
         

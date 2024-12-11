@@ -1,0 +1,805 @@
+{
+  "If no one is in the bedroom, turn off all devices": [
+    {
+      "instruction": "If no one is in the bedroom, turn off all devices",
+      "ground_truth": {
+        "commands": [
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom Light",
+            "action": "turn_off",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
+            "action": "turn_off",
+            "parameters": {}
+          }
+        ]
+      },
+      "result": {
+        "commands": [
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom Light",
+            "action": "turn_off",
+            "parameters": null
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
+            "action": "turn_off",
+            "parameters": null
+          }
+        ],
+        "reasoning": "The user requested to turn off all devices in the bedroom if no one is present. Therefore, both the Bedroom Light and Bedroom AC will be turned off."
+      }
+    }
+  ],
+  "When temperature is above 25 degrees, turn on AC and set to cooling mode": [
+    {
+      "instruction": "When temperature is above 25 degrees, turn on AC and set to cooling mode",
+      "ground_truth": {
+        "commands": [
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room AC",
+            "action": "turn_on",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room AC",
+            "action": "set_mode",
+            "parameters": {
+              "mode": "cool"
+            }
+          }
+        ]
+      },
+      "result": {
+        "commands": [
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room AC",
+            "action": "turn_on",
+            "parameters": null
+          },
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room AC",
+            "action": "set_mode",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
+            "action": "turn_on",
+            "parameters": null
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
+            "action": "set_mode",
+            "parameters": null
+          }
+        ],
+        "reasoning": "The user wants to turn on the AC when the temperature is above 25 degrees and set it to cooling mode. Since there are AC units in both the Living Room and Bedroom, commands are generated for both rooms to turn on the AC and set the mode to 'cool'. The parameters for setting the mode are not specified in the user input, so they are left as null."
+      }
+    }
+  ],
+  "If someone enters the living room, turn on the lights at 70% brightness": [
+    {
+      "instruction": "If someone enters the living room, turn on the lights at 70% brightness",
+      "ground_truth": {
+        "commands": [
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room Light",
+            "action": "turn_on",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room Light",
+            "action": "set_brightness",
+            "parameters": {
+              "brightness": 70
+            }
+          }
+        ]
+      },
+      "result": {
+        "commands": [
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room Light",
+            "action": "turn_on",
+            "parameters": null
+          },
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room Light",
+            "action": "set_brightness",
+            "parameters": {}
+          }
+        ],
+        "reasoning": "The user wants to turn on the lights in the living room at 70% brightness. Therefore, two commands are needed: one to turn on the Living Room Light and another to set its brightness to 70."
+      }
+    }
+  ],
+  "When room is empty for 30 minutes, set AC to 26 degrees and fan mode": [
+    {
+      "instruction": "When room is empty for 30 minutes, set AC to 26 degrees and fan mode",
+      "ground_truth": {
+        "commands": [
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room AC",
+            "action": "set_temperature",
+            "parameters": {
+              "temperature": 26
+            }
+          },
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room AC",
+            "action": "set_mode",
+            "parameters": {
+              "mode": "fan"
+            }
+          }
+        ]
+      },
+      "result": {
+        "commands": [
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room AC",
+            "action": "set_temperature",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room AC",
+            "action": "set_mode",
+            "parameters": {}
+          }
+        ],
+        "reasoning": "The user wants to set the AC to 26 degrees and fan mode when the room is empty for 30 minutes. Therefore, we need to execute two commands: one to set the temperature of the Living Room AC to 26 degrees and another to set its mode to 'fan'."
+      }
+    }
+  ],
+  "If bedroom is occupied, set light to warm white and 50% brightness": [
+    {
+      "instruction": "If bedroom is occupied, set light to warm white and 50% brightness",
+      "ground_truth": {
+        "commands": [
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom Light",
+            "action": "set_color_temp",
+            "parameters": {
+              "color_temp": 2700
+            }
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom Light",
+            "action": "set_brightness",
+            "parameters": {
+              "brightness": 50
+            }
+          }
+        ]
+      },
+      "result": {
+        "commands": [
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom Light",
+            "action": "set_color_temp",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom Light",
+            "action": "set_brightness",
+            "parameters": {}
+          }
+        ],
+        "reasoning": "The user wants to set the bedroom light to warm white and 50% brightness. To achieve this, we need to execute two commands: one to set the color temperature to a warm white value (typically around 2700K) and another to set the brightness to 50%. The commands are directed to the Bedroom Light."
+      }
+    }
+  ],
+  "When living room is empty, dim lights to 10% and turn off AC": [
+    {
+      "instruction": "When living room is empty, dim lights to 10% and turn off AC",
+      "ground_truth": {
+        "commands": [
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room Light",
+            "action": "set_brightness",
+            "parameters": {
+              "brightness": 10
+            }
+          },
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room AC",
+            "action": "turn_off",
+            "parameters": {}
+          }
+        ]
+      },
+      "result": {
+        "commands": [
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room Light",
+            "action": "set_brightness",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room AC",
+            "action": "turn_off",
+            "parameters": null
+          }
+        ],
+        "reasoning": "The user wants to dim the lights to 10% and turn off the AC in the living room when it is empty. Therefore, we need to set the brightness of the Living Room Light to 10% and turn off the Living Room AC."
+      }
+    }
+  ],
+  "If temperature drops below 20 degrees, turn on AC in heating mode": [
+    {
+      "instruction": "If temperature drops below 20 degrees, turn on AC in heating mode",
+      "ground_truth": {
+        "commands": [
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room AC",
+            "action": "turn_on",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room AC",
+            "action": "set_mode",
+            "parameters": {
+              "mode": "heat"
+            }
+          }
+        ]
+      },
+      "result": {
+        "commands": [
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room AC",
+            "action": "turn_on",
+            "parameters": null
+          },
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room AC",
+            "action": "set_mode",
+            "parameters": {}
+          }
+        ],
+        "reasoning": "The user wants to turn on the AC in heating mode if the temperature drops below 20 degrees. Therefore, we need to execute two commands: first, to turn on the Living Room AC, and second, to set its mode to 'heat'."
+      }
+    }
+  ],
+  "When bedroom is occupied for more than 1 hour, set AC temperature to 24": [
+    {
+      "instruction": "When bedroom is occupied for more than 1 hour, set AC temperature to 24",
+      "ground_truth": {
+        "commands": [
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
+            "action": "set_temperature",
+            "parameters": {
+              "temperature": 24
+            }
+          }
+        ]
+      },
+      "result": {
+        "commands": [
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
+            "action": "set_temperature",
+            "parameters": {}
+          }
+        ],
+        "reasoning": "The user wants to set the AC temperature to 24 degrees Celsius when the bedroom is occupied for more than 1 hour. The appropriate command is to set the temperature of the Bedroom AC to 24 degrees."
+      }
+    }
+  ],
+  "If no movement in living room, turn off lights and set AC to fan mode": [
+    {
+      "instruction": "If no movement in living room, turn off lights and set AC to fan mode",
+      "ground_truth": {
+        "commands": [
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room Light",
+            "action": "turn_off",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room AC",
+            "action": "set_mode",
+            "parameters": {
+              "mode": "fan"
+            }
+          }
+        ]
+      },
+      "result": {
+        "commands": [
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room Light",
+            "action": "turn_off",
+            "parameters": null
+          },
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room AC",
+            "action": "set_mode",
+            "parameters": {}
+          }
+        ],
+        "reasoning": "The user requested to turn off the lights and set the AC to fan mode if there is no movement in the living room. Therefore, two commands are generated: one to turn off the Living Room Light and another to set the Living Room AC to fan mode."
+      }
+    }
+  ],
+  "When both rooms are empty, turn off all devices": [
+    {
+      "instruction": "When both rooms are empty, turn off all devices",
+      "ground_truth": {
+        "commands": [
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room Light",
+            "action": "turn_off",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room AC",
+            "action": "turn_off",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom Light",
+            "action": "turn_off",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
+            "action": "turn_off",
+            "parameters": {}
+          }
+        ]
+      },
+      "result": {
+        "commands": [
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room Light",
+            "action": "turn_off",
+            "parameters": null
+          },
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room AC",
+            "action": "turn_off",
+            "parameters": null
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom Light",
+            "action": "turn_off",
+            "parameters": null
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
+            "action": "turn_off",
+            "parameters": null
+          }
+        ],
+        "reasoning": "Since both the Living Room and Bedroom are empty, all devices in both rooms should be turned off. This includes the Living Room Light, Living Room AC, Bedroom Light, and Bedroom AC."
+      }
+    }
+  ],
+  "If someone is in bedroom, turn on light and set AC to 23 degrees": [
+    {
+      "instruction": "If someone is in bedroom, turn on light and set AC to 23 degrees",
+      "ground_truth": {
+        "commands": [
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom Light",
+            "action": "turn_on",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
+            "action": "set_temperature",
+            "parameters": {
+              "temperature": 23
+            }
+          }
+        ]
+      },
+      "result": {
+        "commands": [
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom Light",
+            "action": "turn_on",
+            "parameters": null
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
+            "action": "set_temperature",
+            "parameters": {}
+          }
+        ],
+        "reasoning": "The user wants to turn on the light and set the air conditioner to 23 degrees in the bedroom. Therefore, two commands are generated: one to turn on the Bedroom Light and another to set the temperature of the Bedroom AC to 23 degrees."
+      }
+    }
+  ],
+  "When temperature is above 28 degrees, turn on both ACs in cooling mode": [
+    {
+      "instruction": "When temperature is above 28 degrees, turn on both ACs in cooling mode",
+      "ground_truth": {
+        "commands": [
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room AC",
+            "action": "turn_on",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
+            "action": "turn_on",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room AC",
+            "action": "set_mode",
+            "parameters": {
+              "mode": "cool"
+            }
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
+            "action": "set_mode",
+            "parameters": {
+              "mode": "cool"
+            }
+          }
+        ]
+      },
+      "result": {
+        "commands": [
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room AC",
+            "action": "turn_on",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room AC",
+            "action": "set_mode",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
+            "action": "turn_on",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
+            "action": "set_mode",
+            "parameters": {}
+          }
+        ],
+        "reasoning": "The user wants to turn on both air conditioners when the temperature exceeds 28 degrees. Therefore, we need to send commands to both the Living Room AC and the Bedroom AC to turn them on and set their mode to 'cool'."
+      }
+    }
+  ],
+  "If living room is empty for 2 hours, turn everything off and set lights to 0": [
+    {
+      "instruction": "If living room is empty for 2 hours, turn everything off and set lights to 0",
+      "ground_truth": {
+        "commands": [
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room Light",
+            "action": "turn_off",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room AC",
+            "action": "turn_off",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room Light",
+            "action": "set_brightness",
+            "parameters": {
+              "brightness": 0
+            }
+          }
+        ]
+      },
+      "result": {
+        "commands": [
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room Light",
+            "action": "turn_off",
+            "parameters": null
+          },
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room Light",
+            "action": "set_brightness",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room AC",
+            "action": "turn_off",
+            "parameters": null
+          }
+        ],
+        "reasoning": "The user wants to turn off all devices in the living room and set the brightness of the Living Room Light to 0 if the room is empty for 2 hours. Therefore, the commands include turning off the Living Room Light and Living Room AC, and setting the brightness of the Living Room Light to 0."
+      }
+    }
+  ],
+  "When someone enters bedroom, set light to cool white and turn on AC": [
+    {
+      "instruction": "When someone enters bedroom, set light to cool white and turn on AC",
+      "ground_truth": {
+        "commands": [
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom Light",
+            "action": "set_color_temp",
+            "parameters": {
+              "color_temp": 6500
+            }
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
+            "action": "turn_on",
+            "parameters": {}
+          }
+        ]
+      },
+      "result": {
+        "commands": [
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom Light",
+            "action": "set_color_temp",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
+            "action": "turn_on",
+            "parameters": {}
+          }
+        ],
+        "reasoning": "The user wants to set the light to cool white and turn on the AC when someone enters the bedroom. The cool white light corresponds to a color temperature setting, so we will set the color temperature of the Bedroom Light. Additionally, we will turn on the Bedroom AC."
+      }
+    }
+  ],
+  "If temperature is below 18 degrees, set both ACs to heating mode": [
+    {
+      "instruction": "If temperature is below 18 degrees, set both ACs to heating mode",
+      "ground_truth": {
+        "commands": [
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room AC",
+            "action": "set_mode",
+            "parameters": {
+              "mode": "heat"
+            }
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
+            "action": "set_mode",
+            "parameters": {
+              "mode": "heat"
+            }
+          }
+        ]
+      },
+      "result": {
+        "commands": [
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room AC",
+            "action": "set_mode",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
+            "action": "set_mode",
+            "parameters": {}
+          }
+        ],
+        "reasoning": "The user wants to set both air conditioners to heating mode if the temperature is below 18 degrees. Therefore, we need to issue a command to set the mode of the Living Room AC and the Bedroom AC to 'heat'."
+      }
+    }
+  ],
+  "When energy consumption is high, reduce all device power": [
+    {
+      "instruction": "When energy consumption is high, reduce all device power",
+      "ground_truth": null,
+      "result": {
+        "commands": [
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room Light",
+            "action": "set_brightness",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room AC",
+            "action": "set_temperature",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom Light",
+            "action": "set_brightness",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
+            "action": "set_temperature",
+            "parameters": {}
+          }
+        ],
+        "reasoning": "To reduce power consumption when energy usage is high, we can lower the brightness of the lights in both the Living Room and Bedroom, and also set the temperature of the air conditioners to a more energy-efficient level. The specific brightness and temperature values can be determined based on user preferences, but the actions to reduce power are clear."
+      }
+    }
+  ],
+  "If air quality is poor, enable air purification mode": [
+    {
+      "instruction": "If air quality is poor, enable air purification mode",
+      "ground_truth": null,
+      "result": {
+        "commands": [
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room AC",
+            "action": "set_mode",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
+            "action": "set_mode",
+            "parameters": {}
+          }
+        ],
+        "reasoning": "The user input indicates a need to enable air purification mode due to poor air quality. Since the available actions for the air conditioners include setting the mode, I will set the mode of both the Living Room AC and Bedroom AC to 'fan' mode, which is typically used for air circulation and can help improve air quality."
+      }
+    }
+  ],
+  "When sun sets, adjust lighting for evening mode": [
+    {
+      "instruction": "When sun sets, adjust lighting for evening mode",
+      "ground_truth": null,
+      "result": {
+        "commands": [
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room Light",
+            "action": "set_brightness",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom Light",
+            "action": "set_brightness",
+            "parameters": {}
+          }
+        ],
+        "reasoning": "To adjust the lighting for evening mode when the sun sets, it is appropriate to set the brightness of the lights in both the Living Room and Bedroom. The specific brightness levels can be determined based on user preference, but the command structure allows for setting brightness in both rooms."
+      }
+    }
+  ],
+  "If weather is rainy, adjust indoor settings": [
+    {
+      "instruction": "If weather is rainy, adjust indoor settings",
+      "ground_truth": null,
+      "result": {
+        "commands": [
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room Light",
+            "action": "set_brightness",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom Light",
+            "action": "set_brightness",
+            "parameters": {}
+          }
+        ],
+        "reasoning": "Since the weather is rainy, it is likely to be darker indoors. Therefore, I will increase the brightness of the lights in both the Living Room and Bedroom to create a more comfortable environment."
+      }
+    }
+  ],
+  "When guest mode is active, optimize all settings": [
+    {
+      "instruction": "When guest mode is active, optimize all settings",
+      "ground_truth": null,
+      "result": {
+        "commands": [
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room Light",
+            "action": "set_brightness",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Living Room",
+            "device_name": "Living Room AC",
+            "action": "set_mode",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom Light",
+            "action": "set_brightness",
+            "parameters": {}
+          },
+          {
+            "target_room_name": "Bedroom",
+            "device_name": "Bedroom AC",
+            "action": "set_mode",
+            "parameters": {}
+          }
+        ],
+        "reasoning": "In guest mode, it is common to optimize settings for comfort and convenience. For the Living Room, I will set the brightness of the Living Room Light to a comfortable level and set the Living Room AC to a suitable mode (likely 'cool'). Similarly, for the Bedroom, I will adjust the Bedroom Light brightness and set the Bedroom AC to an appropriate mode. The specific brightness levels and modes can be determined based on typical guest preferences."
+      }
+    }
+  ]
+}
