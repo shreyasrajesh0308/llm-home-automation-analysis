@@ -15,6 +15,6 @@ A comprehensive analysis of Local Large Language Models (LLMs) for home automati
 # Required Submissions
 
 * [Proposal](proposal)
-* [Midterm Checkpoint Presentation Slides](https://example.com)
-* [Final Presentation Slides](https://example.com)
+* [Midterm Checkpoint Presentation Slides](https://docs.google.com/presentation/d/1RiaGGa6rnTSaldQNHgP5o20bo5EdViJ7/edit?usp=sharing&ouid=104681869297753299317&rtpof=true&sd=true)
+* [Final Presentation Slides](https://docs.google.com/presentation/d/1-Cjmm7XOf6fFblbKyZdnloIoRwRFERILNJ8IdwLHPWQ/edit?usp=sharing)
 * [Final Report](report)

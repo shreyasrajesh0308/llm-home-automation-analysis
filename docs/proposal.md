@@ -5,52 +5,88 @@ title: Project Proposal
 
 # Project Proposal
 
-## 1. Motivation & Objective
+## Project Overview
 
+### Primary Goal
 To analyze and evaluate the performance of Large Language Models (LLMs) in home automation applications, focusing on the relationships between instruction complexity, model size, system resources, and execution performance.
 
-## 2. State of the Art & Its Limitations
+### Primary Research Questions
+Understanding Tradeoffs between model size, performance, query complexity and cost:
+1. How do different classes of LLMs perform in home automation contexts?
+2. What are the key tradeoffs between model sizes and deployment options?
+3. How does the complexity of instruction decide which scale of model to be used? 
+4. Possibly exploration into Routing calls based on the level of complexity of the instruction. (Explorations along the lines of https://lmsys.org/blog/2024-07-01-routellm/)
 
-How is it done today, and what are the limits of current practice?
+## Model Categories
 
-## 3. Novelty & Rationale
+### 1. Small Language Models (Embedded Deployment)
+- **Size Range**: 1-3B parameters
+- **Deployment**: Direct on embedded device (Jetson Nano)
+- **Examples**: LLama3.2 - 1B and 3B Variants, Heavily Quantized 7B models
 
-What is new in your approach and why do you think it will be successful?
+### 2. Medium-Size Open Source Models (Local Server)
+- **Size Range**: 7-70B parameters
+- **Deployment**: Local production server (A6000, A100, H100)
+- **Examples**: Llama-3.1 7B, 70B, Mistral etc. Other MoE models as well
 
-## 4. Potential Impact
+### 3. Large Closed-Source Models (API Access)
+- **Size Range**: 70B+ parameters
+- **Deployment**: Cloud API calls
+- **Examples**: GPT4, Claude, Grok
 
-If the project is successful, what difference will it make, both technically and broadly?
+## Analysis Vectors
 
-## 5. Challenges
+### 1. Performance Metrics
 
-What are the challenges and risks?
+#### Command Understanding and Accuracy
+- Simple commands (single action)
+- Composite commands (multiple actions)
+- Complex contextual commands (Inferring command based on user want)
+- Error rate analysis
 
-## 6. Requirements for Success
+#### Latency Analysis
+- Response time measurement
+- Latency variance
+- Network latency and reliability (for API calls)
 
-What skills and resources are necessary to perform the project?
+#### Instruction Complexity Handling
+- Instruction complexity supported with high accuracy
+- Degradation patterns with increasing complexity
+- Reasoning capabilities based on user inputs
 
-## 7. Metrics of Success
+### 2. Operational Considerations
 
-What are metrics by which you would check for success?
+#### Cost Analysis
+- Hardware/Deployment costs (embedded/server)
+- API costs (per-query pricing)
 
-## 8. Execution Plan
+#### Security and Privacy Assessment
+- Security Implications especially for cloud based closed source models
 
-Describe the key tasks in executing your project, and in case of team project describe how will you partition the tasks.
+## Expected Outcomes
 
-## 9. Related Work
+### 1. Quantitative Analysis
+- Performance vs. Cost curves for each model category
+- Accuracy vs. Instruction complexity relationships
+- Latency analysis for the analyzed model classes
 
-### 9.a. Papers
+### 2. Decision Framework
+- Model selection guidelines based on use case
+- Deployment architecture recommendations
+- Cost-benefit analysis framework
+- Possible study on using a mix of all kinds of models guided by a router
 
-List the key papers that you have identified relating to your project idea, and describe how they related to your project. Provide references (with full citation in the References section below).
+## Project Requirements
+1. Jetson-Nano/other type of embedding platform
+2. Access to open source home automation systems
+3. Home automation test-bed (lights, smart plugs etc.)
+4. Server Grade GPUs to host mid-size models
+5. API access to SOTA models
 
-### 9.b. Datasets
-
-List datasets that you have identified and plan to use. Provide references (with full citation in the References section below).
-
-### 9.c. Software
-
-List softwate that you have identified and plan to use. Provide references (with full citation in the References section below).
-
-## 10. References
-
-List references correspondign to citations in your text above. For papers please include full citation and URL. For datasets and software include name and URL.
+## Implementation Steps
+1. Analyze the API of home automation system and use Large closed models to generate a training/evaluation set (Command and Instruction pairs)
+2. Zero-shot evaluating the small and mid-sized language models
+   - If performance is bad (we expected this to happen with smaller models), considering finetuning
+3. Evaluating the accuracy of different models
+4. Deploy the smaller model/mid sized model and test latency/costs
+5. Ablation studies (Instruction complexity handling analysis, Security Assessment)
